@@ -47,7 +47,7 @@ class CreateResourceApi extends Command
             $this->error('Error!!!');
             return;
         }
-        $infor_option = "- Route: $this->route_name \n- Version: $this->version \n- Controller: $this->controller \n- Methods: $this->method \n";
+        $infor_option = "- Route: $this->route_name \n- Version: $this->version \n- Controller: $this->controller \n- Methods: $this->method \n- Model: $this->model";
         $this->info($infor_option);
         if ($this->confirm('Continue create resource?')) {
             if ($this->createResource()) {
@@ -71,7 +71,7 @@ class CreateResourceApi extends Command
             return false;
         }
         if ($this->confirm('Enter [no] to create all methods resource api Or [yes] to enter methods?')) {
-            $this->method = $this->ask('Enter name methods of controller(Example:show,index,delete,update,store,destroy,...)?');
+            $this->method = $this->ask('Enter name methods of controller(Example:show,index,update,store,destroy,...)?');
         }
         if ($this->confirm('Do you wish to create model?')) {
             $this->model = $this->ask('Enter name model?');
@@ -151,7 +151,7 @@ class CreateResourceApi extends Command
 
     function createModel(){
         if($this->model!=''){
-             exec("(cd " . base_path() . " && php artisan make:model Models/$this->model)");
+            exec("(cd " . base_path() . " && php artisan make:model Models/$this->model)");
             $this->warn('Model created successfully.');
         }
     }
@@ -168,8 +168,7 @@ class CreateResourceApi extends Command
                 $access_methods.="'$method',";
             }
         }
-        $str_route = $this->method=='all'?"\$router->resource('$this->route_name', '$this->controller');":"\$router->resource('$this->route_name', '$this->controller',
-            ['only' => [$access_methods]]);";
+        $str_route = $this->method=='all'?"\$router->resource('$this->route_name', '$this->controller');":"\$router->resource('$this->route_name', '$this->controller',['only' => [$access_methods]]);";
         if($this->version=='default'){
             file_put_contents(base_path('routes/web.php'),$str_route,FILE_APPEND);
         }else{
