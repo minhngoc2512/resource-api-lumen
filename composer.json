@@ -1,0 +1,34 @@
+{
+    "name": "minhngoc/resource-api-lumen",
+    "license": "MIT",
+    "description": "Command create resource api",
+    "keywords": [
+        "API",
+        "Documentation",
+        "Lumen",
+        "Resource"
+    ],
+    "homepage": "http://github.com/minhngoc2512/resource-api-lumen",
+    "authors": [
+        {
+            "name": "MinhNgoc"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-0": {
+            "MinhNgoc\\ResourceApiLumen": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "MinhNgoc\\ResourceApiLumen\\ResourceCommandServiceProvider"
+            ]
+       }
+    }
+}
