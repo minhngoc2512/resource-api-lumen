@@ -18,7 +18,8 @@ Run command update package:
 Go to your `bootstrap/app.php` and register the service provider:
 
 ```php
-
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(Appzcoder\LumenRoutesList\RoutesCommandServiceProvider::class);
 $app->register(MinhNgoc\ResourceApiLumen\ResourceCommandServiceProvider::class);
 ```
 
