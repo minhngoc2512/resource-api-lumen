@@ -106,33 +106,9 @@ class CreateResourceApi extends Command
         }else{
             $name_methods = explode(',', $this->method);
         }
-        $methods = "";
+        $methods = '';
         foreach ($name_methods as $method) {
-            if ($method == 'store') {
-                $methods .= "
-    function $method(Request \$request){
-    
-    }
-        ";
-            } else if ($method == 'destroy' || $method == 'show' || $method == 'edit') {
-                $methods .= "
-    function $method(\$id){
-    
-    }
-        ";
-            } else if ($method == 'update') {
-                $methods .= "
-    function $method(\$id,Request \$request){
-    
-    }
-        ";
-            } else {
-                $methods .= "
-    function $method(){
-    
-    }
-        ";
-            }
+            $methods .= $this->createMethod($method);
         }
         try{
             $path_class = $this->version=='default'?app_path("Http/Controllers/$controller.php"):app_path("Http/Controllers/Api/$version/$controller.php");
@@ -151,9 +127,76 @@ class CreateResourceApi extends Command
 
     function createModel(){
         if($this->model!=''){
-            exec("(cd " . base_path() . " && php artisan make:model Models/$this->model)");
+             exec("(cd " . base_path() . " && php artisan make:model Models/$this->model)");
             $this->warn('Model created successfully.');
         }
+    }
+
+    function createMethod($method){
+
+        $str_comment = "
+     /**
+     * GET /categories
+     *
+     * Cho phép trả về danh sách các danh mục của cơ sở dữ liệu.
+     *
+     * Bạn cần lưu ý rằng hệ thộng mặc định chỉ trả về 30 bản ghi, nếu muốn lấy nhiều hơn bạn có thể truyền thêm các tham số.
+     *
+     * ### Available command options:
+     * Info route | Description
+     * --------- | -------
+     * `version_route` | Version $this->version
+     * `controller` | $this->controller
+     * `route_name` | $this->route_name
+     *
+     * ### Thông số lấy dữ liệu:
+     * Trường dữ liệu (Param) | Mô tả chi tiết
+     * --------- | -------
+     * `@id` | ID $this->route_name
+     * `fields` | List fields $this->route_name
+     *     
+     * @param limit {Number} Số bản ghi cần lấy.
+     * @return \Illuminate\Http\Response
+     */
+       
+        ";
+
+
+        if ($method == 'store') {
+           $str_method  = "
+    $str_comment
+    function $method(Request \$request){
+    
+    }
+        ";
+        } else if ($method == 'destroy' || $method == 'show' || $method == 'edit') {
+            $str_method = "
+     $str_comment
+    function $method(\$id){
+    
+    }
+        ";
+        } else if ($method == 'update') {
+            $str_method = "
+    $str_comment
+    function $method(\$id,Request \$request){
+    
+    }
+        ";
+        } else {
+            $str_method = "
+    $str_comment
+    function $method(){
+    
+    }
+        ";
+        }
+
+        return $str_method;
+
+
+
+
     }
 
     function createRoute(){
