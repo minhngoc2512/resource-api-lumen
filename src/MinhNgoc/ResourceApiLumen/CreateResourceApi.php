@@ -136,13 +136,13 @@ class CreateResourceApi extends Command
 
         $str_comment = "
      /**
-     * GET /categories
+     * GET v$this->version/$this->route_name
      *
-     * Cho phép trả về danh sách các danh mục của cơ sở dữ liệu.
+     * Cho phép trả về danh sách các bản ghi cơ sở dữ liệu.
      *
      * Bạn cần lưu ý rằng hệ thộng mặc định chỉ trả về 30 bản ghi, nếu muốn lấy nhiều hơn bạn có thể truyền thêm các tham số.
      *
-     * ### Available command options:
+     * ### Thông tin cơ bản:
      * Info route | Description
      * --------- | -------
      * `version_route` | Version $this->version
@@ -150,16 +150,33 @@ class CreateResourceApi extends Command
      * `route_name` | $this->route_name
      *
      * ### Thông số lấy dữ liệu:
-     * Trường dữ liệu (Param) | Mô tả chi tiết
-     * --------- | -------
-     * `@id` | ID $this->route_name
-     * `fields` | List fields $this->route_name
-     *     
-     * @param limit {Number} Số bản ghi cần lấy.
+     * Trường dữ liệu (Param) | Default | Mô tả chi tiết
+     * --------- | ------- | -------
+     * `@fields` | NULL | Danh sách các trường dữ liệu $this->route_name ví dụ (id,name,v..v.v..), nếu không truyền tham số này thì sẽ trả về 1 số trường mặc định.
+     * `@orderby` | NULL | Trường ưu tiên sắp xếp trong $this->route_name ví dụ (date), nếu không truyền tham số này thì sẽ sắp xếp mặc định.
+     * `@limit` | NULL | Số lượng bản ghi $this->route_name cần lấy ra, nếu không truyền tham số này thì sẽ mặc định là 30 bản ghi.
+     * `@page` | NULL | Số thứ tự trang $this->route_name cần lấy ra, nếu không truyền tham số này thì sẽ mặc định là trang 1.
+     *
      * @return \Illuminate\Http\Response
      */
        
-        ";
+      ";
+        if($method != "index"){
+            $str_comment = "
+     /**
+     * GET v$this->version/$this->route_name
+     *
+     * Mô tả chức năng hàm
+     * ### Thông số lấy dữ liệu:
+     * Trường dữ liệu (Param) | Mô tả chi tiết
+     * --------- | -------
+     * `@id` | ID $this->route_name
+     * `@fields` | List fields $this->route_name
+     * @return \Illuminate\Http\Response
+     */
+
+      ";
+        }
 
 
         if ($method == 'store') {
