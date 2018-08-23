@@ -72,7 +72,7 @@ class CreateResourceApi extends Command
             return false;
         }
         if ($this->confirm('Enter [no] to create all methods resource api Or [yes] to enter methods?')) {
-            $this->method = $this->ask('Enter name methods of controller(Example:show,index,update,store,destroy,...)?');
+            $this->method = $this->ask('Enter name methods of controller(Example:show,index,update,store,destroy,edit...)?');
         }
         if ($this->confirm('Do you wish to create model?')) {
             $this->model = $this->ask('Enter name model?');
@@ -116,7 +116,9 @@ class CreateResourceApi extends Command
             $content = file_get_contents($path_class);
             $content = str_replace('extends Controller','',$content);
             $content = str_replace('use App\Http\Controllers\Controller;','',$content);
-            $content = str_replace('}',$methods .'}',$content);
+            $content = str_replace('}',$methods .'
+}'
+                ,$content);
             file_put_contents($path_class,$content);
         }catch (\Exception $error){
             $this->warn($error->getMessage());
@@ -161,9 +163,7 @@ class CreateResourceApi extends Command
      * `@page` | NULL | Số thứ tự trang $this->route_name cần lấy ra, nếu không truyền tham số này thì sẽ mặc định là trang 1.
      *
      * @return \Illuminate\Http\Response
-     */
-       
-      ";
+     */";
         if($method != "index"){
             $str_comment = "
      /**
@@ -176,9 +176,7 @@ class CreateResourceApi extends Command
      * `@id` | ID $this->route_name
      * `@fields` | List fields $this->route_name
      * @return \Illuminate\Http\Response
-     */
-
-      ";
+     */";
         }
 
 
@@ -228,7 +226,8 @@ class CreateResourceApi extends Command
                 $access_methods.="'$method',";
             }
         }
-        $str_route = $this->method=='all'?"\$router->resource('$this->route_name', '$this->controller');":"\$router->resource('$this->route_name', '$this->controller',['only' => [$access_methods]]);";
+        $str_route = $this->method=='all'?"
+\$router->resource('$this->route_name', '$this->controller');":"\$router->resource('$this->route_name', '$this->controller',['only' => [$access_methods]]);";
         if($this->version=='default'){
             file_put_contents(base_path('routes/web.php'),$str_route,FILE_APPEND);
         }else{
