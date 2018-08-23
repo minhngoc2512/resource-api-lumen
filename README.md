@@ -9,7 +9,7 @@ Automatically create resource api, model,router.
 https://github.com/minhngoc2512/resource-api-lumen
 ## Installation
 
-Run command update package:
+Run command install package:
 
 ```sh
    $ composer require minhngoc/resource-api-lumen:dev-master
