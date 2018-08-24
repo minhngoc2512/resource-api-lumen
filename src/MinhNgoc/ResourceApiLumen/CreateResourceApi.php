@@ -115,7 +115,13 @@ class CreateResourceApi extends Command
             $path_class = $this->version=='default'?app_path("Http/Controllers/$controller.php"):app_path("Http/Controllers/Api/$version/$controller.php");
             $content = file_get_contents($path_class);
             $content = str_replace('extends Controller','',$content);
-            $content = str_replace('use App\Http\Controllers\Controller;','',$content);
+            $content = str_replace('use App\Http\Controllers\Controller;',"
+/**
+ * @resource $this->version $this->controller 
+ *
+ * Api for $this->controller
+ */
+            ",$content);
             $content = str_replace('}',$methods .'
 }'
                 ,$content);
