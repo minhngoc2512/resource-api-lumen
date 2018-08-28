@@ -119,7 +119,7 @@ class CreateResourceApi extends Command
 /**
  * @resource $this->version $this->controller 
  *
- * Api for $this->controller
+ * Api for $this->route_name
  */
             ",$content);
             $content = str_replace('}',$methods .'
