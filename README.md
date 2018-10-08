@@ -3,7 +3,7 @@
 Automatically create resource api, model,router.
 
 
-`php artisan resource:create {route_name} {--version_route=default} {--controller=null}`
+`php artisan resource:create {route_name} --version_route={default} --controller={null}`
 
 
 https://github.com/minhngoc2512/resource-api-lumen
