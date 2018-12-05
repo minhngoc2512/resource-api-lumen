@@ -11,7 +11,7 @@ class CreateResourceApi extends Command
     private $controller = null;
     private $method = 'all';
     private $model = '';
-    private $arr_type = ['index'=>'GET','show'=>'GET','update'=>'PUT','edit'=>'GET','destroy'=>'DELETE','create'=>'GET','store'=>'POST'];
+    private $arr_type = ['index'=>'GET','show'=>'GET','update'=>'PUT','destroy'=>'DELETE','store'=>'POST'];
     /**
      * The name and signature of the console command.
      *
@@ -204,7 +204,7 @@ class CreateResourceApi extends Command
         } else if ($method == 'update') {
             $str_method = "
     $str_comment
-    function $method(\$id,Request \$request){
+    function $method(Request \$request,\$id){
     
     }
         ";
